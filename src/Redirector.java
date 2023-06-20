@@ -67,7 +67,7 @@ public class Redirector {
                     request.append((char) c);
                 }
                 String get = request.toString();
-                String[] pieces = get.split("\\w*");
+                String[] pieces = get.split("\\s+");
                 String theFile = pieces[1];
                 // IF this is HTTP/1.0 or later send a MIME header
                 if (get.indexOf("HTTP") != -1) {
@@ -75,13 +75,13 @@ public class Redirector {
                     Date now = new Date();
                     out.write("Date: " + now + "\r\n");
                     out.write("Server: Redirector 1.1.\r\n");
-                    out.write("Loacation: " + newSite + theFile + "\r\n");
+                    out.write("Location: " + newSite + theFile + "\r\n");
                     out.write("Content-type: text/html\r\n\r\n");
                     out.flush();
                 }
                 // Not all browsers support redirection so we need to produce
                 // HTML that says where the document has moved to.
-                out.write("<HTML><HEAD><tITLE>Documeny moved</TITLE></HEAD></HTML>\r\n");
+                out.write("<HTML><HEAD><TITLE>Document moved</TITLE></HEAD></HTML>\r\n");
                 out.write("<BODY><H1>Document moved</H1>\r\n");
                 out.write("The document " + theFile
                         + " has moved to\r\n<A HREF=\"" + newSite + theFile + "\">"
